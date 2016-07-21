@@ -16,11 +16,17 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+api_v1 = [
     url(r'^docs/', include('rest_framework_docs.urls')),
-
-    # API
     url(r'^accounts/', view=include('project.accounts.urls', namespace='accounts')),
     url(r'^organisations/', view=include('project.organisations.urls', namespace='organisations')),
+]
+
+api = [
+    url(r'^v1/', include(api_v1, namespace='v1'))
+]
+
+urlpatterns = [
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(api, namespace='api')),
 ]
